@@ -65,4 +65,59 @@ describe('Issue create', () => {
       cy.get('[data-testid="form-field:title"]').should('contain', 'This field is required');
     });
   });
-});
+
+  it('Test case 1: Custom Issue Creation', () => {
+    //System finds modal for creating issue and does next steps inside of it
+    cy.get('[data-testid="modal:issue-create"]').within(() => {
+      
+    //open issue type dropdown and choose Bug
+    cy.get('[data-testid="select:type"]').click();
+    cy.get('[data-testid="select-option:Bug"]')
+          .trigger('click');
+            
+    //Type value to description input field
+    cy.get('.ql-editor').type('My_bug_description');
+
+     //Type value to title input field
+    //Order of filling in the fields is first description, then title on purpose
+    //Otherwise filling title first sometimes doesn't work due to web page implementation
+    cy.get('input[name="title"]').type('Bug');
+      
+    //Select Pickle Rick from reporter dropdown
+    cy.get('[data-testid="select:reporterId"]').click();
+    cy.get('[data-testid="avatar:Pickle Rick"]').click();
+
+    //Select Highest from priority dropdown
+    cy.get('[data-testid="select:priority"]').click();
+    cy.get('[data-testid="select-option:Highest"]').click();
+
+    //Click on button "Create issue"
+    cy.get('button[type="submit"]').click();
+    });
+  })
+
+  it('Test case 2: Random Data Plugin Issue Creation', () => {
+    //System finds modal for creating issue and does next steps inside of it
+    cy.get('[data-testid="modal:issue-create"]').within(() => {
+      
+            
+    //Description - Use the random data plugin for a several words.
+    cy.get('.ql-editor').type('eight surprise bare slight pull atmosphere put near noise fish friendly mountain yet behind truth refer rich stone party sweet tired touch here known');
+
+    //Title - Use the random data plugin for a single word.
+    cy.get('input[name="title"]').type('Bradley');
+      
+    //Select Baby Yoda from reporter dropdown
+    cy.get('[data-testid="select:reporterId"]').click();
+    cy.get('[data-testid="avatar:Baby Yoda"]').click();
+
+    //Select Low from priority dropdown
+    cy.get('[data-testid="select:priority"]').click();
+    cy.get('[data-testid="select-option:Low"]').click();
+
+    //Click on button "Create issue"
+    cy.get('button[type="submit"]').click();
+      
+    });
+  })
+})

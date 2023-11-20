@@ -120,7 +120,7 @@ describe('Issue create', () => {
     });
   })
 
-  it.only('Test case 2: Random Data Plugin Issue Creation', () => {
+  it('Test case 2: Random Data Plugin Issue Creation', () => {
     
     let title = faker.word.sample()
     let descr = faker.word.words(5)
